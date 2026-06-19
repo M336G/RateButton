@@ -194,7 +194,7 @@ void DevRateStarsPopup::updateDifficultyVisuals(int stars) {
         ? difficultyFrames[stars] : "difficulty_00_btn_001.png";
 
     m_difficultyFace->setDisplayFrame(spriteCache->spriteFrameByName(frame));
-    m_starsLabel->setString(fmt::format("{}", stars).c_str());
+    m_starsLabel->setString(std::to_string(stars).c_str());
 }
 
 DevRateStarsPopup *DevRateStarsPopup::create(int levelId) {

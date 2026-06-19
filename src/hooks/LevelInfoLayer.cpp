@@ -1,6 +1,7 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/LevelInfoLayer.hpp>
 #include "../DevRateStarsPopup.hpp"
+#include "../managers/SessionManager.hpp"
 #include "../utils/Utils.hpp"
 
 using namespace geode::prelude;
@@ -29,16 +30,18 @@ class $modify(MyLevelInfoLayer, LevelInfoLayer) {
     }
 
     void onDevRateButton(CCObject *) {
-        if (!Mod::get()->getSavedValue<bool>("shown-rate-button-warning")) {
+        if (!SessionManager::ShownRateButtonWarning) {
             geode::createQuickPopup(
                 "Rate Button Warning",
-                "This mod <cr>only works on GDPSs</c> if you have <cy>permissions to rate levels</c>.\n\n"
-                "Using it <co>outside a GDPS</c> or <co>without the mentioned permissions</c> will send <cr>meaningless comments</c> and may get you <cr>comment banned</c>.\n\n"
-                "<cy>Do you meet the above conditions?</c>\n<co>This will not be shown again.</c>",
+                "This mod <co>only works</c> if you have <cy>permissions to rate levels</c> on a GDPS!\n"
+                "Using it <co>without the mentioned permissions</c> will result in <cr>nothing happening</c> when you click Submit.\n\n"
+                "<cy>Do you acknowledge this?</c>\n<co>This will not be shown again.</c>",
                 "No", "Yes",
                 [levelID = static_cast<int>(m_level->m_levelID)](auto, bool btn2) {
                     if (btn2) {
                         Mod::get()->setSavedValue("shown-rate-button-warning", true);
+                        SessionManager::ShownRateButtonWarning = true;
+
                         DevRateStarsPopup::create(levelID)->show();
                     }
                 }
