@@ -2,6 +2,8 @@
 
 #include <string_view>
 
+using namespace geode::prelude;
+
 namespace Utils {
     constexpr std::string_view getLevelDifficulty(int stars) {
         constexpr std::string_view difficulties[] = {
@@ -11,4 +13,6 @@ namespace Utils {
         
         return (stars >= 0 && stars <= 10)? difficulties[stars] : "na";
     }
+
+    bool isOnGdps();
 }

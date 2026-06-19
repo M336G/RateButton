@@ -8,7 +8,7 @@
 	},
 	"id": "m336.rate-button",
 	"name": "Rate Button (GDPS only)",
-	"version": "v1.0.0-beta.1",
+	"version": "v1.0.0-beta.2",
 	"developer": "M336",
 	"description": "Rate levels like RobTop!",
 	"links": {
@@ -24,6 +24,7 @@
 		"interface"
 	],
 	"dependencies": {
-		"geode.node-ids": ">=v1.23.3"
+		"geode.node-ids": ">=v1.23.3",
+        "km7dev.server_api": { "version": ">=v4.0.0", "required": false }
 	}
 }

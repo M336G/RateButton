@@ -1,6 +1,7 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/LevelInfoLayer.hpp>
 #include "../DevRateStarsPopup.hpp"
+#include "../utils/Utils.hpp"
 
 using namespace geode::prelude;
 
@@ -8,6 +9,9 @@ class $modify(MyLevelInfoLayer, LevelInfoLayer) {
     bool init(GJGameLevel *level, bool challenge) {
         if (!LevelInfoLayer::init(level, challenge))
             return false;
+
+        if (!Utils::isOnGdps())
+            return true;
 
         if (auto *leftMenu = static_cast<CCMenu *>(this->getChildByID("left-side-menu"))) {
             auto *devRateButton = CCMenuItemSpriteExtra::create(
