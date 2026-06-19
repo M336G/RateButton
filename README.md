@@ -8,6 +8,9 @@
 ----------
 
 **This mod lets GDPS owners/moderators rate levels more precisely through a custom interface instead of using the `!rate` command or the moderator send popup.**
+<div align="center">
+  <img width="1920" height="1080" alt="Mod preview" src="https://github.com/M336G/RateButton/blob/main/previews/preview-1.png" />
+</div>
 
 ## Features
 - Rate levels & set their difficulty automatically
