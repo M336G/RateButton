@@ -1,4 +1,5 @@
 #include "DevRateStarsPopup.hpp"
+#include "managers/SettingsManager.hpp"
 #include "utils/Utils.hpp"
 
 bool DevRateStarsPopup::init(int levelId) {
@@ -27,7 +28,7 @@ bool DevRateStarsPopup::init(int levelId) {
     /*
         COINS BUTTON LOGIC
     */
-    auto coinsSprite = CCSprite::createWithSpriteFrameName("secretCoinUI2_001.png");
+    auto *coinsSprite = CCSprite::createWithSpriteFrameName("secretCoinUI2_001.png");
     coinsSprite->setScale(44.f / 53.75f);
 
     m_coinsButton = CCMenuItemSpriteExtra::create(
@@ -42,45 +43,100 @@ bool DevRateStarsPopup::init(int levelId) {
     /*
         LOWER STARS BUTTON LOGIC
     */
-    auto decreaseStarsButton = CCMenuItemSpriteExtra::create(
+    auto *decreaseStarsButton = CCMenuItemSpriteExtra::create(
         CCSprite::createWithSpriteFrameName("GJ_arrow_02_001.png"),
         this,
         menu_selector(DevRateStarsPopup::onDecrease)
     );
     decreaseStarsButton->setRotation(-90.f);
     decreaseStarsButton->setID("decrease-stars-button"_spr);
-    m_buttonMenu->addChildAtPosition(decreaseStarsButton, Anchor::Left, { 55.f, 0.f });
+    m_buttonMenu->addChildAtPosition(decreaseStarsButton, Anchor::Left, { 85.f, 0.f });
 
     /*
         STARS LABEL LOGIC
     */
     m_starsLabel = CCLabelBMFont::create("0", "bigFont.fnt");
     m_starsLabel->setID("stars-label"_spr);
-    m_buttonMenu->addChildAtPosition(m_starsLabel, Anchor::Left, { 100.f, 0.f });
+    m_buttonMenu->addChildAtPosition(m_starsLabel, Anchor::Left, { 130.f, 0.f });
 
     /*
         INCREASE STARS BUTTON LOGIC
     */
-    auto increaseStarsButton = CCMenuItemSpriteExtra::create(
+    auto *increaseStarsButton = CCMenuItemSpriteExtra::create(
         CCSprite::createWithSpriteFrameName("GJ_arrow_02_001.png"),
         this,
         menu_selector(DevRateStarsPopup::onIncrease)
     );
     increaseStarsButton->setRotation(90.f);
     increaseStarsButton->setID("increase-stars-button"_spr);
-    m_buttonMenu->addChildAtPosition(increaseStarsButton, Anchor::Left, { 145.f, 0.f });
+    m_buttonMenu->addChildAtPosition(increaseStarsButton, Anchor::Left, { 175.f, 0.f });
 
     /*
         DIFFICULTY FACE LOGIC
     */
     m_difficultyFace = CCSprite::createWithSpriteFrameName("difficulty_00_btn_001.png");
     m_difficultyFace->setScale(1.25f);
-    m_buttonMenu->addChildAtPosition(m_difficultyFace, Anchor::Right, { -70.f, 0.f });
+    m_difficultyFace->setID("difficulty-face"_spr);
+    m_buttonMenu->addChildAtPosition(m_difficultyFace, Anchor::Right, { -85.f, 0.f });
+
+    /*
+        DAILY BUTTON LOGIC
+    */
+   if (SettingsManager::ShowDailyButton) {
+        auto *dailySprite = ButtonSprite::create(
+            "Set\nDaily", 50, true, "goldFont.fnt", "GJ_button_01.png", 40.f, 1.0f
+        );
+        dailySprite->setScale(0.6f);
+
+        auto *dailyButton = CCMenuItemSpriteExtra::create(
+            dailySprite,
+            this,
+            menu_selector(DevRateStarsPopup::onDaily)
+        );
+        dailyButton->setID("daily-button"_spr);
+        m_buttonMenu->addChildAtPosition(dailyButton, Anchor::Left, { 30.f, 15.f });
+    }
+
+    /*
+        WEEKLY BUTTON LOGIC
+    */
+   if (SettingsManager::ShowWeeklyButton) {
+        auto *weeklySprite = ButtonSprite::create(
+            "Set\nWeek", 50, true, "goldFont.fnt", "GJ_button_01.png", 40.f, 1.0f
+        );
+        weeklySprite->setScale(0.6f);
+
+        auto *weeklyButton = CCMenuItemSpriteExtra::create(
+            weeklySprite,
+            this,
+            menu_selector(DevRateStarsPopup::onWeekly)
+        );
+        weeklyButton->setID("weekly-button"_spr);
+        m_buttonMenu->addChildAtPosition(weeklyButton, Anchor::Left, { 30.f, -15.f });
+    }
+
+    /*
+        SEND ONLY BUTTON LOGIC
+    */
+    if (SettingsManager::ShowSendOnlyButton) {
+        auto *sendOnlySprite = ButtonSprite::create(
+            "Send\nOnly", 50, true, "goldFont.fnt", "GJ_button_01.png", 40.f, 1.0f
+        );
+        sendOnlySprite->setScale(0.6f);
+
+        auto *sendOnlyButton = CCMenuItemSpriteExtra::create(
+            sendOnlySprite,
+            this,
+            menu_selector(DevRateStarsPopup::onSendOnly)
+        );
+        sendOnlyButton->setID("send-only-button"_spr);
+        m_buttonMenu->addChildAtPosition(sendOnlyButton, Anchor::Right, { -30.f, -30.f });
+    }
 
     /*
         CANCEL BUTTON LOGIC
     */
-    auto cancelButton = CCMenuItemSpriteExtra::create(
+    auto *cancelButton = CCMenuItemSpriteExtra::create(
         ButtonSprite::create("Cancel", "goldFont.fnt", "GJ_button_01.png"),
         this,
         menu_selector(DevRateStarsPopup::onCancel)
@@ -91,7 +147,7 @@ bool DevRateStarsPopup::init(int levelId) {
     /*
         SUBMIT BUTTON LOGIC
     */
-    auto submitButton = CCMenuItemSpriteExtra::create(
+    auto *submitButton = CCMenuItemSpriteExtra::create(
         ButtonSprite::create("Submit", "goldFont.fnt", "GJ_button_01.png"),
         this,
         menu_selector(DevRateStarsPopup::onSubmit)
@@ -146,6 +202,42 @@ void DevRateStarsPopup::onIncrease(CCObject *) {
 
     m_selectedStars++;
     updateDifficultyVisuals(m_selectedStars);
+}
+
+void DevRateStarsPopup::onDaily(CCObject *) {
+    GameLevelManager::sharedState()->uploadComment(
+        "!daily", CommentType::Level, m_levelId, 0
+    );
+
+    this->onClose(nullptr);
+}
+
+void DevRateStarsPopup::onWeekly(CCObject *) {
+    GameLevelManager::sharedState()->uploadComment(
+        "!weekly", CommentType::Level, m_levelId, 0
+    );
+
+    this->onClose(nullptr);
+}
+
+void DevRateStarsPopup::onSendOnly(CCObject *) {
+    if (m_selectedStars > 0) {
+        GameLevelManager::sharedState()->uploadComment(
+            fmt::format(
+                "!send {} {} {}",
+                Utils::getLevelDifficulty(m_selectedStars),
+                m_selectedStars,
+                static_cast<int>(m_featureState)
+            ),
+            CommentType::Level, m_levelId, 0
+        );
+    } else {
+        GameLevelManager::sharedState()->uploadComment(
+            "!unsend", CommentType::Level, m_levelId, 0
+        );
+    }
+
+    this->onClose(nullptr);
 }
 
 void DevRateStarsPopup::onCancel(CCObject *) {

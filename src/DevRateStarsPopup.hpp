@@ -29,6 +29,9 @@ protected:
     void onCoins(CCObject *);
     void onDecrease(CCObject *);
     void onIncrease(CCObject *);
+    void onDaily(CCObject *);
+    void onWeekly(CCObject *);
+    void onSendOnly(CCObject *);
     void onCancel(CCObject *);
     void onSubmit(CCObject *);
 

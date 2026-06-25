@@ -8,7 +8,7 @@
 	},
 	"id": "m336.rate-button",
 	"name": "Rate Button (GDPS only)",
-	"version": "v1.0.0-beta.3",
+	"version": "v1.0.0",
 	"developer": "M336",
 	"description": "Rate levels like RobTop!",
 	"links": {
@@ -23,6 +23,30 @@
 		"utility",
 		"interface"
 	],
+	"settings": {
+		"extra-settings": {
+			"type": "title",
+			"name": "Extra Settings"
+		},
+		"disable-daily-button": {
+			"name": "Disable Daily Button",
+			"description": "Disable the small green 'Set Daily' button appearing in the interface allowing you to set the level for daily easily",
+			"type": "bool",
+			"default": false
+		},
+		"disable-weekly-button": {
+			"name": "Disable Weekly Button",
+			"description": "Disable the small green 'Set Week' button appearing in the interface allowing you to set the level for weekly easily",
+			"type": "bool",
+			"default": false
+		},
+		"disable-send-only-button": {
+			"name": "Disable Send Only Button",
+			"description": "Disable the small green 'Send Only' button appearing in the interface allowing you to only suggest the level and not actually rate it",
+			"type": "bool",
+			"default": true
+		}
+	},
 	"dependencies": {
 		"geode.node-ids": ">=v1.23.3",
         "km7dev.server_api": { "version": ">=v4.0.0", "required": false }

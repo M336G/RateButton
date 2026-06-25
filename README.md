@@ -13,9 +13,10 @@
 </div>
 
 ## Features
-- Rate levels & set their difficulty automatically
-- Set levels as rated only, featured, epic, legendary, or mythic
+- Rate/send levels & set their difficulty automatically
+- Set/suggest levels as rated only, featured, epic, legendary, or mythic
 - Toggle coins being verified or not
+- Set levels for daily or weekly
 
 *This mod is inspired from [how RobTop rates levels](https://www.youtube.com/watch?v=_wmWuymEZDs).*
 
