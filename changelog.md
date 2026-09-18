@@ -1,3 +1,6 @@
+# v1.0.1
+- Fixed a button positioning issue
+
 # v1.0.0
 - Added toggleable buttons to set the level for daily/weekly & to only send the level
 - Improved performance (very slightly) & clarified the read me and some popups' text

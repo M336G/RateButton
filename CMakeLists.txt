@@ -10,7 +10,7 @@ set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 set(GEODE_PACKAGE_ZSTD ON)
 
-project(RateButton VERSION 1.0.0)
+project(RateButton VERSION 1.0.1)
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.cpp)
 add_library(${PROJECT_NAME} SHARED ${SOURCES})

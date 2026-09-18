@@ -24,6 +24,7 @@ class $modify(MyLevelInfoLayer, LevelInfoLayer) {
             devRateButton->setID("dev-rate-button"_spr);
 
             leftMenu->addChild(devRateButton);
+            leftMenu->updateLayout();
         }
         
         return true;
